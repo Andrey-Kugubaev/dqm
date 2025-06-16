@@ -17,7 +17,7 @@ class Posts(Base):
     status = Column(String(32), nullable=False)
     image = Column(Text, nullable=True)
 
-    user_id = Column(String(36), ForeignKey("users.id"), nullable=False)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False) # ToDo change to Integer
     user = relationship("Users", back_populates="posts")
 
     comments = relationship(

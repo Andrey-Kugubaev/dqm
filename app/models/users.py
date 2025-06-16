@@ -9,7 +9,7 @@ class Users(Base):
     surname = Column(String(256), nullable=False)
     age = Column(Integer, nullable=True)
     gender = Column(String(8), nullable=True)
-    email = Column(String(128), nullable=False)
+    email = Column(String(128), nullable=False) # ToDo unique=True, index=True
 
     posts = relationship(
         "Posts",

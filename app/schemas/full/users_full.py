@@ -1,4 +1,6 @@
-from typing import List, Optional
+from typing import List
+
+from pydantic import ConfigDict, Field
 
 from app.schemas.base.comments_base import CommentBase
 from app.schemas.base.posts_base import PostBase
@@ -11,9 +13,7 @@ class UserCreate(UserBase):
 
 class UserDB(UserCreate):
     id: int
-    posts: Optional[List[PostBase]] = []
-    comments: Optional[List[CommentBase]] = []
+    posts: List[PostBase] = Field(default_factory=list)
+    comments: List[CommentBase] = Field(default_factory=list)
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)

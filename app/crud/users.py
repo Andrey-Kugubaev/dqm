@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -12,13 +14,10 @@ class CRUDUsers(CRUDBase):
             self,
             user_id: int,
             session: AsyncSession,
-            include: list[str] = None
-    ):
+            include: Optional[list[str]] = None
+    ) -> Optional[Users]:
         query = select(Users).where(Users.id == user_id)
-        if include is None:
-            include = []
-        elif len(include) == 1 and ',' in include[0]:
-            include = include[0].split(',')
+        include = self._parse_include(include)
 
         if 'posts' in include:
             query = query.options(selectinload(Users.posts))

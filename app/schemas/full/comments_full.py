@@ -1,3 +1,5 @@
+from pydantic import ConfigDict
+
 from app.schemas.base.comments_base import CommentBase
 
 
@@ -9,6 +11,4 @@ class CommentCreate(CommentBase):
 class CommentDB(CommentCreate):
     id: int
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)
