@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_get_user_with_posts_and_comments(client, post_with_relations):
     user_id = post_with_relations.user.id
     response = client.get(f"/api/users/{user_id}?include=posts,comments")

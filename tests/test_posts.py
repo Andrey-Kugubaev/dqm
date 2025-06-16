@@ -1,6 +1,3 @@
-import pytest
-
-
 def test_get_nonexistent_post(client):
     response = client.get("/api/posts/999999?include=tags,user,comments")
     assert response.status_code == 404

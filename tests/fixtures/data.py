@@ -1,4 +1,5 @@
 import pytest
+
 from app.models.comments import Comments
 from app.models.posts import Posts
 from app.models.tags import Tags
@@ -26,4 +27,3 @@ def post_with_relations(mixer, user, tags):
     mixer.blend(Comments, text="Nice post!", user=user, post=post)
 
     return post
-

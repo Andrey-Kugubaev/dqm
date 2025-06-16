@@ -1,10 +1,12 @@
 import os
 from pathlib import Path
 
-from fastapi.testclient import TestClient
+os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///./test.db"
+
 import pytest
 import pytest_asyncio
-from mixer.backend.sqlalchemy import Mixer as _mixer
+from fastapi.testclient import TestClient
+from mixer.backend.sqlalchemy import Mixer
 from sqlalchemy.ext.asyncio import (
     AsyncSession,
     async_sessionmaker,
@@ -12,14 +14,8 @@ from sqlalchemy.ext.asyncio import (
 )
 from sqlalchemy.orm import sessionmaker
 
-
-
-os.environ["DATABASE_URL"] = "sqlite+aiosqlite:///./test.db"
-
 from app.core.db import Base
 from app.main import app
-from app.core.db import get_async_session
-
 
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
@@ -77,5 +73,5 @@ def mixer():
     from sqlalchemy import create_engine
 
     sync_engine = create_engine(f'sqlite:///{str(TEST_DB)}')
-    SyncSession = sessionmaker(bind=sync_engine)
-    return _mixer(session=SyncSession(), commit=True)
+    sync_session = sessionmaker(bind=sync_engine)
+    return Mixer(session=sync_session(), commit=True)
