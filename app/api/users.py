@@ -18,9 +18,10 @@ router = APIRouter(
 )
 async def get_user_by_id(
         id: int,
-        include: list[str] = Query([]),
+        include: list[str] | None = Query(None),
         session: AsyncSession = Depends(get_async_session),
 ):
+    include = include or []
     user_db = await users_crud.get_user_by_id(id, session, include=include)
     if not user_db:
         raise HTTPException(status_code=404, detail="User not found")

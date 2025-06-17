@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 
 class PostStatus(str, Enum):
@@ -21,4 +21,4 @@ class PostBase(BaseModel):
     status: PostStatus
     image: Optional[str]
 
-    model_config = {"from_attributes": True}
+    model_config = ConfigDict(from_attributes=True)

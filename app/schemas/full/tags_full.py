@@ -1,3 +1,5 @@
+from pydantic import ConfigDict
+
 from app.schemas.base.tags_base import TagBase
 
 
@@ -8,6 +10,4 @@ class TagCreate(TagBase):
 class TagDB(TagCreate):
     id: int
 
-    model_config = {
-        "from_attributes": True
-    }
+    model_config = ConfigDict(from_attributes=True)

@@ -1,3 +1,5 @@
+from typing import Optional
+
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.orm import selectinload
@@ -12,15 +14,13 @@ class CRUDPosts(CRUDBase):
             self,
             session: AsyncSession,
             status: str = None,
-            include: list[str] = None
-    ):
+            include: Optional[list[str]] = None
+    ) -> list[Posts]:
         query = select(Posts)
         if status:
             query = query.where(Posts.status == status)
-        if include is None:
-            include = []
-        elif len(include) == 1 and ',' in include[0]:
-            include = include[0].split(',')
+
+        include = self._parse_include(include)
 
         if 'user' in include:
             query = query.options(selectinload(Posts.user))
@@ -35,13 +35,10 @@ class CRUDPosts(CRUDBase):
             self,
             post_id: int,
             session: AsyncSession,
-            include: list[str] = None
-    ):
+            include: Optional[list[str]] = None
+    ) -> Posts | None:
         query = select(Posts).where(Posts.id == post_id)
-        if include is None:
-            include = []
-        elif len(include) == 1 and ',' in include[0]:
-            include = include[0].split(',')
+        include = self._parse_include(include)
 
         if 'user' in include:
             query = query.options(selectinload(Posts.user))

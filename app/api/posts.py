@@ -1,4 +1,4 @@
-from typing import List
+from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -15,18 +15,17 @@ router = APIRouter(
 
 @router.get(
     '/',
-    response_model=List[PostShortDB],
+    response_model=list[PostShortDB],
     response_model_exclude_none=True,
 )
 async def get_posts(
-        status: str = Query(""),
-        include: list[str] = Query([]),
+        status: Optional[str] = Query(None),
+        include: Optional[list[str]] = Query(None),
         session: AsyncSession = Depends(get_async_session),
 ):
-    status_filter = status if status else None
-
+    include = include or []
     posts_db = await posts_crud.get_all_posts(
-        session, status=status_filter, include=include
+        session, status=status, include=include
     )
     if not posts_db:
         raise HTTPException(status_code=404, detail="Posts not found")
@@ -41,14 +40,15 @@ async def get_posts(
     response_model=PostDB,
     response_model_exclude_none=True,
 )
-async def get_posts_by_id(
+async def get_post_by_id(
         id: int,
-        include: list[str] = Query([]),
+        include: Optional[list[str]] = Query(None),
         session: AsyncSession = Depends(get_async_session),
 ):
+    include = include or []
     post_db = await posts_crud.get_post_by_id(id, session, include=include)
     if not post_db:
-        raise HTTPException(status_code=404, detail="User not found")
+        raise HTTPException(status_code=404, detail="Post not found")
 
     post = PostDB.model_validate(post_db)
     return post

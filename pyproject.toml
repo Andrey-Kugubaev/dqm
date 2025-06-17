@@ -1,13 +1,13 @@
 [tool.ruff]
 line-length = 79
 target-version = "py313"
-ignore = ["N805"]
 exclude = ["alembic"]
 
 [tool.ruff.lint]
 preview = true
 select = ["E", "F", "I", "N", "W"]
 extend-select = ["E501", "E302", "E303"]
+ignore = ["N805"]
 
 [tool.ruff.lint.isort]
 force-sort-within-sections = false
@@ -26,9 +26,3 @@ preview = true
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
-
-[tool.black]
-line-length = 79
-
-[tool.mypy]
-ignore_missing_imports = true

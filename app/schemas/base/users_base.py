@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Optional
 
-from pydantic import BaseModel, EmailStr, Field, field_validator
+from pydantic import BaseModel, ConfigDict, EmailStr, Field, field_validator
 
 
 class GenderValue(str, Enum):
@@ -18,9 +18,9 @@ class UserBase(BaseModel):
     email: EmailStr
 
     @field_validator("name", "surname")
-    def name_cant_be_numeric(cls, value: Optional[str]):
+    def name_cant_be_numeric(cls, value: Optional[str]) -> Optional[str]:
         if value is not None and value.isnumeric():
             raise ValueError("Name can't be a number")
         return value
 
-    model_config = {"from_attributes": True}
+    model_config = ConfigDict(from_attributes=True)
