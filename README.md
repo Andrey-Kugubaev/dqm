@@ -43,20 +43,24 @@ The table relationship schema in the database is presented as an ERD diagram and
 `cd dpm`<br>
 <br>
 2. Create a .env file in the root of the project and add the following parameters:<br>
-`nano .env`<br>
+
+`nano .env`
+<br>
 <br>
 `APP_TITLE=Data Query Project`<br>
 `DESCRIPTION = Test assignment for the position of Python Engineer (GenAI)`<br>
 `DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/postgres`<br>
 <br>
-3. Build and run the Docker containers<br>
+4. Build and run the Docker containers<br>
 `docker-compose up -d --build`<br>
 _During the build, the database will be automatically populated with test data_<br>
 <br>
-4. Open the documentation in your browser:<br>
+5. Open the documentation in your browser:<br>
 [http://0.0.0.0:8000/docs](http://0.0.0.0:8000/docs) (Swagger UI)<br>
 <br>
 6. To stop and remove the containers:<br>
 `docker-compose down -v`<br>
+<br>
+
 
 Author: [https://github.com/Andrey-Kugubaev](https://github.com/Andrey-Kugubaev)
