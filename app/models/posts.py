@@ -1,4 +1,4 @@
-from sqlalchemy import Column, ForeignKey, String, Table, Text
+from sqlalchemy import Column, ForeignKey, Integer, String, Table, Text
 from sqlalchemy.orm import relationship
 
 from app.core.db import Base
@@ -17,7 +17,7 @@ class Posts(Base):
     status = Column(String(32), nullable=False)
     image = Column(Text, nullable=True)
 
-    user_id = Column(String(36), ForeignKey("users.id"), nullable=False) # ToDo change to Integer
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     user = relationship("Users", back_populates="posts")
 
     comments = relationship(
